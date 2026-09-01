@@ -6,6 +6,7 @@ __pycache__/
 .env
 .streamlit/secrets.toml
 
+*.wav
 *.mp4
 *.mov
 *.avi

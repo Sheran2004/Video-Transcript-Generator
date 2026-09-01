@@ -1,4 +1,8 @@
 streamlit
 openai-whisper
-python-docx
 torch
+soundfile
+pyannote.audio
+deep-translator
+python-docx
+reportlab
