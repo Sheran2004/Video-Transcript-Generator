@@ -3,6 +3,7 @@ import json
 import re
 import subprocess
 import tempfile
+import base64
 from pathlib import Path
 
 import streamlit as st
@@ -802,25 +803,14 @@ def create_json(
 # =========================================================
 
 def copy_button(text):
+    import json
+    import streamlit.components.v1 as components
 
-    safe_text = (
-        text
-        .replace("\\", "\\\\")
-        .replace("`", "\\`")
-        .replace("${", "\\${")
-    )
+    safe_text = json.dumps(text)
 
     html = f"""
     <button
-        onclick="
-            navigator.clipboard.writeText(`{safe_text}`)
-            .then(() => {{
-                this.innerText = '✅ Copied!';
-                setTimeout(() => {{
-                    this.innerText = '📋 Copy Transcript';
-                }}, 2000);
-            }})
-        "
+        id="copyBtn"
         style="
             width:100%;
             padding:12px;
@@ -835,11 +825,47 @@ def copy_button(text):
     >
         📋 Copy Transcript
     </button>
+
+    <script>
+        const textToCopy = {safe_text};
+        const button = document.getElementById("copyBtn");
+
+        button.addEventListener("click", async () => {{
+            try {{
+                if (navigator.clipboard && window.isSecureContext) {{
+                    await navigator.clipboard.writeText(textToCopy);
+                }} else {{
+                    const textarea = document.createElement("textarea");
+                    textarea.value = textToCopy;
+                    textarea.style.position = "fixed";
+                    textarea.style.opacity = "0";
+                    document.body.appendChild(textarea);
+                    textarea.focus();
+                    textarea.select();
+                    document.execCommand("copy");
+                    textarea.remove();
+                }}
+
+                button.innerText = "✅ Copied!";
+
+                setTimeout(() => {{
+                    button.innerText = "📋 Copy Transcript";
+                }}, 2000);
+
+            }} catch (error) {{
+                button.innerText = "❌ Copy failed";
+
+                setTimeout(() => {{
+                    button.innerText = "📋 Copy Transcript";
+                }}, 2000);
+            }}
+        }});
+    </script>
     """
 
     components.html(
         html,
-        height=55
+        height=60
     )
 
 
