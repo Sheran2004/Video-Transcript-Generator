@@ -1,29 +1,52 @@
-# 🎙️ Video Transcript Generator
+# 🎙️ AI Video Transcription Tool
 
-An AI-powered local video transcription tool built with **Python, Streamlit, and OpenAI Whisper**.
+An AI-powered local video transcription application built with **Python, Streamlit, OpenAI Whisper and Pyannote Audio**.
 
-Upload a video and automatically convert its spoken content into a complete text transcript. The generated transcript can be previewed and downloaded as a **TXT** or **DOCX** file.
+The application converts spoken content from videos into timestamped transcripts, detects speakers, supports translation, editing, searching and multiple export formats.
 
 ## ✨ Features
 
-- 🎥 Upload video files
-- 🤖 AI-powered speech-to-text using OpenAI Whisper
-- ⚡ CUDA/GPU support when available
-- 📝 Timestamped transcript
-- 👀 Transcript preview
-- 📄 Download transcript as TXT
-- 📝 Download transcript as DOCX
-- 🔒 Processes videos locally
-- 💰 No paid API required
+- 🎥 Upload video files and generate transcripts
+- 🤖 OpenAI Whisper transcription
+- ⚡ CUDA GPU acceleration when NVIDIA GPU is available
+- 🎚️ Multiple Whisper models:
+  - Tiny — Fastest
+  - Base — Balanced
+  - Small — Better Accuracy
+  - Medium — High Accuracy
+- 🌐 Automatic language detection
+- 🗣️ Speaker diarization using Pyannote
+- 👥 Automatic speaker labels such as Speaker 1, Speaker 2, etc.
+- 📊 Speaker-wise statistics
+  - Speaking duration
+  - Number of transcript segments
+- ✏️ Editable transcript
+- 🔎 Search transcript
+- 📋 Copy transcript
+- 🌍 Translate transcript into multiple languages
+- 📥 Download transcript as:
+  - TXT
+  - DOCX
+  - PDF
+  - SRT
+  - VTT
+  - JSON
+- 🔒 Video processing is performed locally
+- 💰 No paid transcription API required
 
 ## 🛠️ Tech Stack
 
 - Python
 - Streamlit
 - OpenAI Whisper
+- Pyannote Audio
 - PyTorch
-- python-docx
+- CUDA
 - FFmpeg
+- SoundFile
+- Deep Translator
+- Python-Docx
+- ReportLab
 
 ## 📁 Project Structure
 
@@ -36,60 +59,86 @@ Video-Transcript-Generator/
 ├── .gitignore
 └── venv/
 
-🚀 Installation
+⚙️ Installation
 
 1. Clone the repository
 git clone https://github.com/Sheran2004/Video-Transcript-Generator.git
 cd Video-Transcript-Generator
-2. Create a virtual environment
+2. Create virtual environment
 python -m venv venv
-3. Activate the virtual environment
-Windows PowerShell:
+3. Activate virtual environment
+Windows PowerShell
 .\venv\Scripts\activate
 4. Install dependencies
 pip install -r requirements.txt
-5. Install FFmpeg
-FFmpeg is required by Whisper for audio/video processing.
-Make sure FFmpeg is installed and available in your system PATH.
+
+🤗 Hugging Face Setup
+
+Speaker diarization uses:
+pyannote/speaker-diarization-community-1
+You need a Hugging Face account and access to the model.
+After accepting the model terms, authenticate using:
+hf auth login
+Enter your Hugging Face access token when prompted.
 
 ▶️ Run the Application
+
 streamlit run app.py
 The application will open in your browser.
 
 🎯 How to Use
-1. Open the application.
-2. Upload a supported video.
-3. Click Generate Transcript.
-4. Wait for Whisper to process the video.
-5. Preview the generated transcript.
-6. Download the transcript as TXT or DOCX.
 
-📦 Supported Video Formats
-- MP4
-- MOV
-- AVI
-- MKV
-- WEBM
-- MPEG
-- MPG
+1. Upload a video.
+2. Select the Whisper model.
+3. Select the video language or use Auto Detect.
+4. Enable translation if required.
+5. Select the desired translation language.
+6. Select Speaker Count or use Auto Detect.
+7. Click Generate Transcript.
+8. View the timestamped transcript.
+9. Review speaker labels and speaker statistics.
+10. Edit or search the transcript if required.
+11. Copy the transcript or download it in the required format.
 
-⚡ GPU Support
-The application automatically detects CUDA-compatible NVIDIA GPUs.
-If CUDA is available, transcription is processed using the GPU for improved performance. Otherwise, the application falls back to CPU processing.
+⚡ GPU Acceleration
 
-🔐 Privacy
-Videos are processed locally on the user's computer. No paid external transcription API is required.
+If CUDA is available, the application automatically uses the NVIDIA GPU for Whisper and speaker diarization.
+Otherwise, processing falls back to CPU.
 
-⚠️ Accuracy Note
-The tool uses OpenAI Whisper for automatic speech recognition. Transcription accuracy can vary depending on:
-- Audio quality
-- Background noise
-- Speaker accents
-- Multiple speakers
-- Speech clarity
-- Language
+🔒 Privacy
 
-Therefore, generated transcripts may require manual review for critical use cases.
+Videos are processed locally on the user's computer.
+The application does not require a paid transcription API.
 
-📄 License
-This project is intended for educational and development purposes.
+📄 Supported Export Formats
+
+Format	Description
+TXT	Plain text transcript
+DOCX	Microsoft Word document
+PDF	PDF transcript
+SRT	Subtitle format
+VTT	Web subtitle format
+JSON	Structured transcript data
+
+👥 Speaker Diarization
+
+The application identifies different speakers and associates them with transcript segments.
+Example:
+[00:00 - 00:04] Speaker 1: Hello, welcome to the meeting.
+[00:04 - 00:08] Speaker 2: Thank you for having me.
+[00:08 - 00:12] Speaker 1: Let's get started.
+Speaker statistics provide an overview of each detected speaker's participation.
+
+🚀 Future Improvements
+
+- Real-time transcription
+- Better speaker name customization
+- Audio-only input support
+- Batch video processing
+- Improved subtitle styling
+- Advanced transcript summarization
+- AI-powered meeting insights
+
+👨‍💻 Author
+
+Mohammad Sheran Asgar
